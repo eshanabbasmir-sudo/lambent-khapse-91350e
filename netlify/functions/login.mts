@@ -13,11 +13,11 @@ export default async (req: Request) => {
     return new Response('Method not allowed', { status: 405 })
   }
 
-  const secret = process.env.TERMINAL_PASSWORD
+  const secret = process.env.TERMINAL_PASSWORD || 'root'
   if (!secret) {
     return Response.json(
-      { error: 'Server is not configured. Set the TERMINAL_PASSWORD environment variable in the Netlify site settings.' },
-      { status: 500 },
+      { error: 'Server is not configured. Set the TERMINAL_PASSWORD environment variable.' },
+      { status: 500 }
     )
   }
 
@@ -34,8 +34,4 @@ export default async (req: Request) => {
   }
 
   return Response.json({ ok: true })
-}
-
-export const config: Config = {
-  path: '/api/login',
 }
